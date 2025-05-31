@@ -1,5 +1,5 @@
 ### Navigation page
-This repository is not actively maintained
+This repository is not actively maintained, tho if you encounter a bug feel free to open a new issue
 
 ### What you'll need
 - Basic understanding of Docker
