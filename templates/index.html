@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tile Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.png">
+
+  <style>
+    /*! modern-normalize v2.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+    *,
+    ::after,
+    ::before {
+      box-sizing: border-box
+    }
+
+    html {
+      font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+      line-height: 1.15;
+      -webkit-text-size-adjust: 100%;
+      -moz-tab-size: 4;
+      tab-size: 4
+    }
+
+    body {
+      margin: 0
+    }
+
+    hr {
+      height: 0;
+      color: inherit
+    }
+
+    abbr[title] {
+      text-decoration: underline dotted
+    }
+
+    b,
+    strong {
+      font-weight: bolder
+    }
+
+    code,
+    kbd,
+    pre,
+    samp {
+      font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 1em
+    }
+
+    small {
+      font-size: 80%
+    }
+
+    sub,
+    sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline
+    }
+
+    sub {
+      bottom: -.25em
+    }
+
+    sup {
+      top: -.5em
+    }
+
+    table {
+      text-indent: 0;
+      border-color: inherit
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: inherit;
+      font-size: 100%;
+      line-height: 1.15;
+      margin: 0
+    }
+
+    button,
+    select {
+      text-transform: none
+    }
+
+    [type=button],
+    [type=reset],
+    [type=submit],
+    button {
+      -webkit-appearance: button
+    }
+
+    ::-moz-focus-inner {
+      border-style: none;
+      padding: 0
+    }
+
+    :-moz-focusring {
+      outline: 1px dotted ButtonText
+    }
+
+    :-moz-ui-invalid {
+      box-shadow: none
+    }
+
+    legend {
+      padding: 0
+    }
+
+    progress {
+      vertical-align: baseline
+    }
+
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+      height: auto
+    }
+
+    [type=search] {
+      -webkit-appearance: textfield;
+      outline-offset: -2px
+    }
+
+    ::-webkit-search-decoration {
+      -webkit-appearance: none
+    }
+
+    ::-webkit-file-upload-button {
+      -webkit-appearance: button;
+      font: inherit
+    }
+
+    summary {
+      display: list-item
+    }
+
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    .tile-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .tile {
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 10px;
+      width: 200px;
+      position: relative;
+    }
+
+    .tile img {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .tile-name {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .tile .details {
+      display: none;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .tile .color-outline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      border: 3px solid transparent;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .tile-buttons {
+      margin-top: 10px;
+    }
+
+    .tile-buttons button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 5px;
+      margin: 2px;
+      cursor: pointer;
+    }
+
+    h2 {
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal input,
+    .modal select {
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px;
+      background: #2e2e2e;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 4px;
+    }
+
+    .modal label {
+      margin-top: 10px;
+      display: block;
+    }
+
+    .close-btn {
+      float: right;
+      background: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .color-preview {
+      height: 20px;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    /* From Uiverse.io by e-coders */
+    .theButtons {
+      border-color: white;
+      border-radius: 5px;
+      font-family: sans-serif;
+      color: white;
+      background-color: transparent;
+      padding: 10px 20px;
+    }
+
+    .theButtons:disabled {
+      pointer-events: none;
+    }
+
+    .theButtons:hover {
+      cursor: pointer;
+    }
+
+
+    select option {
+      padding-left: 30px;
+      background-repeat: no-repeat;
+      background-position: 5px center;
+      background-color: black;
+    }
+  </style>
+
+  <script>
+    function toggleDetails(id) {
+      const details = document.getElementById('details-' + id);
+      details.style.display = details.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function updateColorPreview(input) {
+      const color = input.value;
+      document.getElementById('color-preview').style.background = color;
+      input.setAttribute("value", color);  // <-- This makes sure the form submits it
+    }
+
+    function showModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function updateTileColorPreview(select) {
+      const preview = document.getElementById("tile-color-preview");
+      preview.style.background = select.value;
+    }
+
+    // Auto-set preview on modal open (if needed)
+    window.addEventListener("load", () => {
+      const colorSelect = document.getElementById("tile-color");
+      if (colorSelect) {
+        updateTileColorPreview(colorSelect);
+      }
+    });
+
+
+    function openEditModal(tile) {
+      document.getElementById('edit-id').value = tile.id;
+      document.getElementById('edit-name').value = tile.name;
+      document.getElementById('edit-website').value = tile.website;
+      document.getElementById('edit-port').value = tile.port;
+      document.getElementById('edit-username').value = tile.username;
+      document.getElementById('edit-password').value = tile.password;
+      document.getElementById('edit-email').value = tile.email;
+      document.getElementById('edit-image').value = tile.image;
+
+      document.getElementById('edit-http').checked = tile.protocol === "http";
+      document.getElementById('edit-https').checked = tile.protocol === "https";
+
+      document.getElementById('edit-category').value = tile.category;
+      document.getElementById('edit-color').value = tile.color;
+      updateEditColorPreview(document.getElementById('edit-color'));
+
+      // Set form action to point to the edit endpoint
+      document.getElementById('editTileForm').action = `/edit_tile/${tile.id}`;
+
+      document.getElementById('editTileModal').style.display = 'flex';
+    }
+
+    function updateEditColorPreview(select) {
+      const preview = document.getElementById("edit-color-preview");
+      preview.style.background = select.value;
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Tile Dashboard</h1>
+
+  <button class="theButtons" onclick="showModal('tileModal')">+ Add New Tile</button>
+  <button class="theButtons" onclick="showModal('categoryModal')">Manage Categories</button>
+  <button class="theButtons" onclick="showModal('colorModal')">Manage Colors</button>
+
+
+
+
+
+  <!-- Add Tile Modal -->
+  <div class="modal" id="tileModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal('tileModal')">X</button>
+      <h2>Add New Tile</h2>
+      <form action="/add_tile" method="post">
+        <input name="name" placeholder="Name" required>
+        <input name="website" placeholder="Website (e.g. example.com)">
+        <input name="port" placeholder="Port">
+        <input name="username" placeholder="Username">
+        <input name="password" placeholder="Password">
+        <input name="email" placeholder="Email">
+        <label>Protocol:</label>
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+          <label style="display: flex; align-items: center;">
+            <input type="radio" name="protocol" value="http" checked style="margin-right: 5px;"> HTTP
+          </label>
+          <label style="display: flex; align-items: center;">
+            <input type="radio" name="protocol" value="https" style="margin-right: 5px;"> HTTPS
+          </label>
+        </div>
+
+        <input name="image" placeholder="Image URL or path" required>
+
+        <label>Category:</label>
+        <select name="category">
+          {% for category in categories %}
+          <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="tile-color">Color:</label>
+        <div class="custom-select-container">
+          <select name="color" id="tile-color" onchange="updateTileColorPreview(this)">
+            {% for color_name, color_hex in colors.items() %}
+            <option value="{{ color_hex }}" data-color="{{ color_hex }}">
+              {{ color_name }}
+            </option>
+            {% endfor %}
+          </select>
+
+          <div id="tile-color-preview"
+            style="width: 24px; height: 24px; border-radius: 4px; border: 1px solid #888; display: inline-block; vertical-align: middle; margin-left: 8px;">
+          </div>
+        </div>
+
+
+        <script>
+          function updateTileColorPreview(select) {
+            const preview = document.getElementById("tile-color-preview");
+            const selectedColor = select.value;
+            preview.style.background = selectedColor;
+
+            // Also update options backgrounds (not reliable cross-browser)
+            for (const option of select.options) {
+              option.style.background = option.getAttribute('data-color');
+              option.style.color = getContrastYIQ(option.getAttribute('data-color'));
+            }
+          }
+
+          // Helper function to set text color based on bg for readability
+          function getContrastYIQ(hexcolor) {
+            hexcolor = hexcolor.replace('#', '');
+            const r = parseInt(hexcolor.substr(0, 2), 16);
+            const g = parseInt(hexcolor.substr(2, 2), 16);
+            const b = parseInt(hexcolor.substr(4, 2), 16);
+            const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+            return (yiq >= 128) ? 'black' : 'white';
+          }
+
+          window.addEventListener("load", () => {
+            const colorSelect = document.getElementById("tile-color");
+            if (colorSelect) updateTileColorPreview(colorSelect);
+          });
+        </script>
+
+
+
+        <button type="submit" style="margin-top:10px;">Add Tile</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Edit Tile Modal -->
+  <div class="modal" id="editTileModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal('editTileModal')">X</button>
+      <h2>Edit Tile</h2>
+      <form id="editTileForm" method="post">
+        <input type="hidden" name="id" id="edit-id">
+        <input name="name" id="edit-name" placeholder="Name" required>
+        <input name="website" id="edit-website" placeholder="Website">
+        <input name="port" id="edit-port" placeholder="Port">
+        <input name="username" id="edit-username" placeholder="Username">
+        <input name="password" id="edit-password" placeholder="Password">
+        <input name="email" id="edit-email" placeholder="Email">
+
+        <label>Protocol:</label>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <label><input type="radio" name="protocol" value="http" id="edit-http"> HTTP</label>
+          <label><input type="radio" name="protocol" value="https" id="edit-https"> HTTPS</label>
+        </div>
+
+        <input name="image" id="edit-image" placeholder="Image URL" required>
+
+        <label>Category:</label>
+        <select name="category" id="edit-category">
+          {% for category in categories %}
+          <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+
+        <label>Color:</label>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <select name="color" id="edit-color" onchange="updateEditColorPreview(this)">
+            {% for color_name, color_hex in colors.items() %}
+            <option value="{{ color_hex }}">{{ color_name }}</option>
+            {% endfor %}
+          </select>
+
+          <div id="edit-color-preview" style="width: 24px; height: 24px; border-radius: 4px; border: 1px solid #888;">
+          </div>
+        </div>
+
+        <button type="submit" style="margin-top:10px;">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- Category Modal -->
+  <div class="modal" id="categoryModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal('categoryModal')">X</button>
+      <h2>Manage Categories</h2>
+
+      <form action="/add_category" method="post">
+        <input name="new_category" placeholder="New Category" required>
+        <button type="submit">Add Category</button>
+      </form>
+
+      {% for category in categories %}
+      <form action="/delete_category/{{ category }}" method="post" style="margin-top: 10px;">
+        <span>{{ category }}</span>
+        <button type="submit" style="float:right;">Delete</button>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Color Modal -->
+  <div class="modal" id="colorModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal('colorModal')">X</button>
+      <h2>Manage Colors</h2>
+
+      <form action="/add_color" method="post">
+        <input name="color_name" placeholder="Color name" required>
+        <input type="color" name="new_color" id="color-input" value="#000000" onchange="updateColorPreview(this)"
+          required>
+        <div id="color-preview" class="color-preview"></div>
+        <button type="submit" style="margin-top:10px;">Add Color</button>
+      </form>
+
+      {% for color_name, color_hex in colors.items() %}
+      <form action="/delete_color/{{ color_hex | urlencode }}" method="post" style="margin-top: 10px;">
+        <span style="background: {{ color_hex }}; padding: 2px 10px; border-radius: 4px;">
+          {{ color_name }}
+        </span>
+
+        <button type="submit" style="float:right;">Delete</button>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% for category, tile_group in tiles.items() %}
+  <div class="category-section">
+    <h2>{{ category }}</h2>
+    <div class="tile-container">
+      {% for tile in tile_group %}
+      <div class="tile">
+        <div class="color-outline" style="border-color: {{ tile.color }};"></div>
+        <a href="{{ tile.protocol }}://{{ tile.website }}:{{ tile.port }}" target="_blank">
+          <img src="{{ tile.image }}" alt="{{ tile.name }}">
+        </a>
+        <div class="tile-name">{{ tile.name }}</div>
+        <div class="tile-buttons">
+          <button onclick='openEditModal({{ tile | tojson | safe }})'>Edit</button>
+          <button onclick="toggleDetails('{{ tile.id }}')">Show Details</button>
+          <form action="/delete_tile/{{ tile.id }}" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+        <div class="details" id="details-{{ tile.id }}">
+          <p><b>Username:</b> {{ tile.username }}</p>
+          <p><b>Password:</b> {{ tile.password }}</p>
+          <p><b>Email:</b> {{ tile.email }}</p>
+          <p><b>Port:</b> {{ tile.port }}</p>
+          <p><b>Protocol:</b> {{ tile.protocol }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+</body>
+
+</html>
