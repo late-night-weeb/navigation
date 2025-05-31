@@ -311,7 +311,6 @@
       preview.style.background = select.value;
     }
 
-    // Auto-set preview on modal open (if needed)
     window.addEventListener("load", () => {
       const colorSelect = document.getElementById("tile-color");
       if (colorSelect) {
@@ -358,10 +357,6 @@
   <button class="theButtons" onclick="showModal('colorModal')">Manage Colors</button>
 
 
-
-
-
-  <!-- Add Tile Modal -->
   <div class="modal" id="tileModal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal('tileModal')">X</button>
@@ -414,14 +409,12 @@
             const selectedColor = select.value;
             preview.style.background = selectedColor;
 
-            // Also update options backgrounds (not reliable cross-browser)
             for (const option of select.options) {
               option.style.background = option.getAttribute('data-color');
               option.style.color = getContrastYIQ(option.getAttribute('data-color'));
             }
           }
 
-          // Helper function to set text color based on bg for readability
           function getContrastYIQ(hexcolor) {
             hexcolor = hexcolor.replace('#', '');
             const r = parseInt(hexcolor.substr(0, 2), 16);
@@ -445,7 +438,6 @@
   </div>
 
 
-  <!-- Edit Tile Modal -->
   <div class="modal" id="editTileModal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal('editTileModal')">X</button>
@@ -493,7 +485,6 @@
 
 
 
-  <!-- Category Modal -->
   <div class="modal" id="categoryModal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal('categoryModal')">X</button>
@@ -513,7 +504,6 @@
     </div>
   </div>
 
-  <!-- Color Modal -->
   <div class="modal" id="colorModal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal('colorModal')">X</button>
