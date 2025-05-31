@@ -1,0 +1,12 @@
+services:
+  navigation:
+    container_name: navigation
+    image: latenightweeb/navigation:latest
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - /path/to/data.json:/app/data.json
+      - /path/to/images/:/app/static/
+      - /path/to/category.json:/app/category.json
+      - /path/to/colors.json:/app/colors.json
