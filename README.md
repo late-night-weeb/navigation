@@ -35,8 +35,8 @@ python app.py
 ```
 
 #### Screenshots
-![Ui](/screenshots/ui.png?raw=true "Image of the UI")
-![Tile adding](/screenshots/addTile.png?raw=true "Image of the addTile")
-![Tile editing](/screenshots/editTile.png?raw=true "Image of the tile editing")
-![Category management](/screenshots/categories.png?raw=true "Image of the category management")
-![Color management](/screenshots/colors.png?raw=true "Image of the color management")
+![](/screenshots/ui.png?raw=true "Image of the UI")
+![](/screenshots/addTile.png?raw=true "Image of the addTile")
+![](/screenshots/editTile.png?raw=true "Image of the tile editing")
+![](/screenshots/categories.png?raw=true "Image of the category management")
+![](/screenshots/colors.png?raw=true "Image of the color management")
