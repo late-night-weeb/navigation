@@ -15,7 +15,7 @@ Run it using the [Docker Compose](docker-compose.yml)
 services:
   navigation:
     container_name: navigation
-    image: latenightweeb/navigation:latest
+    image: sparklingsausage/navigation:latest
     restart: unless-stopped
     ports:
       - "5000:5000"
